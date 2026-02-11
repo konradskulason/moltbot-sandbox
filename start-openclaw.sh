@@ -62,7 +62,7 @@ should_restore_from_r2() {
 if [ -f "$BACKUP_DIR/openclaw/openclaw.json" ]; then
     if should_restore_from_r2; then
         echo "Restoring from R2 backup at $BACKUP_DIR/openclaw..."
-        cp -a "$BACKUP_DIR/openclaw/." "$CONFIG_DIR/"
+        cp -af "$BACKUP_DIR/openclaw/." "$CONFIG_DIR/"
         cp -f "$BACKUP_DIR/.last-sync" "$CONFIG_DIR/.last-sync" 2>/dev/null || true
         echo "Restored config from R2 backup"
     fi
@@ -70,7 +70,7 @@ elif [ -f "$BACKUP_DIR/clawdbot/clawdbot.json" ]; then
     # Legacy backup format â migrate .clawdbot data into .openclaw
     if should_restore_from_r2; then
         echo "Restoring from legacy R2 backup at $BACKUP_DIR/clawdbot..."
-        cp -a "$BACKUP_DIR/clawdbot/." "$CONFIG_DIR/"
+        cp -af "$BACKUP_DIR/clawdbot/." "$CONFIG_DIR/"
         cp -f "$BACKUP_DIR/.last-sync" "$CONFIG_DIR/.last-sync" 2>/dev/null || true
         # Rename the config file if it has the old name
         if [ -f "$CONFIG_DIR/clawdbot.json" ] && [ ! -f "$CONFIG_FILE" ]; then
@@ -82,7 +82,7 @@ elif [ -f "$BACKUP_DIR/clawdbot.json" ]; then
     # Very old legacy backup format (flat structure)
     if should_restore_from_r2; then
         echo "Restoring from flat legacy R2 backup at $BACKUP_DIR..."
-        cp -a "$BACKUP_DIR/." "$CONFIG_DIR/"
+        cp -af "$BACKUP_DIR/." "$CONFIG_DIR/"
         cp -f "$BACKUP_DIR/.last-sync" "$CONFIG_DIR/.last-sync" 2>/dev/null || true
         if [ -f "$CONFIG_DIR/clawdbot.json" ] && [ ! -f "$CONFIG_FILE" ]; then
             mv "$CONFIG_DIR/clawdbot.json" "$CONFIG_FILE"
@@ -102,7 +102,7 @@ if [ -d "$BACKUP_DIR/workspace" ] && [ "$(ls -A $BACKUP_DIR/workspace 2>/dev/nul
     if should_restore_from_r2; then
         echo "Restoring workspace from $BACKUP_DIR/workspace..."
         mkdir -p "$WORKSPACE_DIR"
-        cp -a "$BACKUP_DIR/workspace/." "$WORKSPACE_DIR/"
+        cp -af "$BACKUP_DIR/workspace/." "$WORKSPACE_DIR/"
         echo "Restored workspace from R2 backup"
     fi
 fi
@@ -113,7 +113,7 @@ if [ -d "$BACKUP_DIR/skills" ] && [ "$(ls -A $BACKUP_DIR/skills 2>/dev/null)" ];
     if should_restore_from_r2; then
         echo "Restoring skills from $BACKUP_DIR/skills..."
         mkdir -p "$SKILLS_DIR"
-        cp -a "$BACKUP_DIR/skills/." "$SKILLS_DIR/"
+        cp -af "$BACKUP_DIR/skills/." "$SKILLS_DIR/"
         echo "Restored skills from R2 backup"
     fi
 fi
